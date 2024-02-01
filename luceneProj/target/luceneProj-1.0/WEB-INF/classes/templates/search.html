@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Loix</title>
+    <link rel="icon" href="/img/Icon.png"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <script type="text/javascript">
+        var searchWay;
+        function query() {
+            document.getElementById("page").value=1;
+            querybegin();
+        }
+        function querybegin() {
+            document.getElementById("search_form").submit();
+            searchWay = document.getElementsByName("searchWay").value;
+        }
+        function changepage(p) {
+            var page_now = Number(document.getElementById("page").value);
+            page_now = page_now + p;
+            document.getElementById("page").value = page_now;
+            if(searchWay === document.getElementsByName("searchWay").value){
+                querybegin();
+            } else{
+                query();
+            }
+        }
+        function changeStr(str) {
+            document.getElementById("queryStr").value = str;
+            query();
+        }
+    </script>
+</head>
+<body>
+    <div class="container" style="max-width: 930px">
+        <div>
+            <img src="/img/Logo.png" alt="Loix Logo" class="center-block"
+                style="max-height: 180px; max-width: 380px"/>
+        </div>
+        <!--  搜索栏  -->
+        <div class="clearfix">
+            <form th:action="index" th:method="POST" th:id="search_form">
+                <div class="col-lg-7">
+                    <div class="input-group input-group-lg">
+                        <input th:type="text" class="form-control" placeholder="Search for.." th:id="queryStr"
+                                aria-describedby="sizing-addon1" th:name="queryStr" th:value="${queryStr}"
+                                style="border-bottom-left-radius:25px; border-top-left-radius: 25px;
+                                        box-shadow: 0px 0px 2px black; margin-top: 3px; font-size: 16px"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="query()"
+                                    style="border-bottom-right-radius:20px; border-top-right-radius: 20px;
+                                            box-shadow: 0px 0px 3px black; margin-top: 3px">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>  Go!
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <input th:type="hidden" th:name="page" th:id="page" th:value="${result.page_now}"/><br><br><br>
+                <label class="radio-inline" style="margin-left: 25px">
+                    <input type="radio" name="searchWay" value="all"
+                           th:checked="${result.search_way.equals('all') || result.search_way == null}"> 全文检索
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="searchWay" value="topic"
+                           th:checked="${result.search_way.equals('topic')}"> 标题检索
+                </label>
+                <span style="margin-left: 20px" class="text-warning">您可以试试搜索：
+                    <a th:onclick="'javascrpit:changeStr(\'刺客信条\')'" th:text="刺客信条"
+                       class="text-warning" style="margin-right: 10px"></a>
+                    <a th:onclick="'javascrpit:changeStr(\'足球\')'" th:text="足球"
+                       class="text-warning" style="margin-right: 10px"></a>
+                    <a th:onclick="'javascrpit:changeStr(\'NBA\')'" th:text="NBA"
+                       class="text-warning" style="margin-right: 10px"></a>
+                    <a th:onclick="'javascrpit:changeStr(\'侏罗纪\')'" th:text="侏罗纪"
+                       class="text-warning" style="margin-right: 10px"></a>
+                    <a th:onclick="'javascrpit:changeStr(\'城市天际线\')'" th:text="城市天际线"
+                       class="text-warning" style="margin-right: 10px"></a>
+                    <a th:onclick="'javascrpit:changeStr(\'角色扮演\')'" th:text="角色扮演"
+                       class="text-warning" style="margin-right: 10px"></a>
+                </span>
+            </form>
+        </div>
+        <!--  显示结果  -->
+        <div>
+<!--            <br>-->
+            <span th:text="${'Loix共为您搜索到'+result.total_count+'条结果,库内共102349条数据'}"
+                  class="text-info" style="margin-left: 25px"></span>
+            <span th:text="${'搜索时间:'+result.getSearch_time()+'ms'}" class="text-info"></span>
+            <span th:text="${'页面处理时间:'+result.getPage_time()+'ms'}" class="text-info"></span>
+            <ul class="list-unstyled">
+                <li th:each="game:${result.gameList}" class="clearfix">
+                    <h4><a th:utext="${game.game_name}" th:href="${game.game_link}" auto></a></h4>
+                    <img th:src="${game.game_img}" alt="game image"
+                         style="max-height: 80px; max-width: 110px; float: left; margin: 0 10px 0 3px">
+                    <span th:text="${game.game_birth}" class="text-muted"></span>
+                    <span th:text="${' 开发商:'+game.game_developer}" class="text-muted"></span>
+                    <span th:text="${' 发行商:'+game.game_publisher}" class="text-muted"></span>
+                    <span th:utext="${game.game_intro.substring(
+                    0, (game.game_intro.length()>215?215:game.game_intro.length()))+'</font>...'}"></span><br>
+                    <a th:href="${game.game_link}" th:text="${game.game_link}" class="text-success"></a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <span th:if="${result.total_count==0}" class="text-danger"
+                th:utext="${'<br><h4>抱歉，没有找到与<strong>'+queryStr+'</strong>相关的游戏噢@~@ 您可以尝试:</h4>'+
+                    '<li>输入游戏的英文名试试~^~<br><li>换一个关键词试试!~!<br>' +
+                    '<li>如果您使用了标题检索，可以试试全文检索^_^'}"></span>
+        </div>
+
+        <!--  翻页部分  -->
+        <div>
+            <a href="javascript:changepage(-1)" class="btn btn-default"
+               th:if="${(result.page_now > 1)&&result.total_count!=0}">上一页</a>
+<!--            <span th:text="${result.page_now+'/'}" th:if="${result.total_count!=0}"-->
+<!--                  style="font-size: 16px"></span>-->
+<!--            <span th:text="${result.page_count}" th:if="${result.total_count!=0}"-->
+<!--                  style="font-size: 16px"></span>-->
+
+            <a th:if="${result.page_count <= 10 && result.page_count != 0}" th:each="i:${#numbers.sequence(1,result.page_count)}"
+                th:onclick="'javascrpit:changepage('+${i - result.page_now}+')'" th:text="${i}"
+                th:class="${i==result.page_now?'btn btn-primary':'btn btn-default'}" style="margin-right: 3px"></a>
+
+            <a th:if="${(result.page_count > 10)&&(result.page_now>10)}" th:onclick="'javascrpit:changepage('+${1 - result.page_now}+')'"
+               th:text="${1}" class="btn btn-default"></a>
+            <span th:if="${(result.page_count > 10)&&(result.page_now>10)}">...</span>
+            <a th:if="${result.page_count > 10}" th:each="i:${#numbers.sequence(result.page_now,(result.page_now+9>result.page_count?result.page_count:result.page_now+9))}"
+               th:onclick="'javascrpit:changepage('+${i - result.page_now}+')'" th:text="${i}"
+               th:class="${i==result.page_now?'btn btn-primary':'btn btn-default'}" style="margin-right: 3px"></a>
+            <span th:if="${(result.page_count > 10)&&(result.page_now+9<result.page_count)}">...</span>
+            <a th:if="${(result.page_count > 10)&&(result.page_now+9<result.page_count)}" th:onclick="'javascrpit:changepage('+${result.page_count - result.page_now}+')'"
+               th:text="${result.page_count}" class="btn btn-default"></a>
+
+            <a href="javascript:changepage(1)" class="btn btn-default"
+               th:if="${(result.page_now < result.page_count)&&result.total_count!=0}">下一页</a>
+        </div>
+    </div>
+</body>
+<hr>
+<blockquote class="blockquote-reverse">
+    <footer>
+        Designed and made by <cite>Lois Lu</cite><br>
+        Powered by <cite>Lucene</cite> and <cite>Scrapy</cite><br>
+        Homework of the <cite>Information Retrieve</cite> class
+    </footer>
+</blockquote>
+</html>

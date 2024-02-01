@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun Aug 08 11:28:20 CST 2021
+lucene-analyzers-common-8.1.0.jar>central=
+lucene-analyzers-common-8.1.0.pom>central=
+lucene-analyzers-common-8.1.0.jar>aliyunmaven=
+lucene-analyzers-common-8.1.0.pom>aliyunmaven=

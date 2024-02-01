@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun Aug 08 11:28:28 CST 2021
+maven-artifact-3.0.pom>central=
+maven-artifact-3.0.pom>aliyunmaven=
+maven-artifact-3.0.jar>aliyunmaven=
+maven-artifact-3.0.jar>central=

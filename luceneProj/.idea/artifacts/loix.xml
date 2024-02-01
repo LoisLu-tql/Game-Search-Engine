@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="loix">
+    <output-path>$PROJECT_DIR$/out/artifacts/loix</output-path>
+    <root id="archive" name="loix.war" />
+  </artifact>
+</component>

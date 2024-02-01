@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun Aug 08 11:30:13 CST 2021
+httpclient-4.0.2.jar>central=
+httpclient-4.0.2.pom>central=
+httpclient-4.0.2.pom>aliyunmaven=
+httpclient-4.0.2.jar>aliyunmaven=
