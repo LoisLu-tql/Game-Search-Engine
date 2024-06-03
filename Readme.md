@@ -1,4 +1,4 @@
-## Game-Search-Engine
+# Game-Search-Engine
 
 #### Get Data
 Based on Scrapy, use the files in ./Steam to crawl data from Steam、Ubisoft and WeGame, them pack the data items and store them into the database. 
