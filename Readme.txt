@@ -1,8 +1,12 @@
-本文件夹存放了该信息检索课程项目的源码。
-indexlib是存放索引库的文件夹。
-luceneProj是项目的核心代码，包括使用lucene分词、创建索引库、进行搜索以及前端的代码。
-repository_lucene存放着luceneProj中用到的依赖，是maven本地仓库。
-Steam中是基于Scrapy框架编写的爬虫。爬取了Steam、Ubisoft、WeGame等网站。
-urls.xml是所有的url路径。
-sql.sql是用sqlyog导出的建库语句。
-不要修改相对路径。在英文路径下运行。
+#### Get Data
+Based on Scrapy, use the files in ./Steam to crawl data from Steam、Ubisoft and WeGame, them pack the data items and store them into the database. 
+
+#### Create Index Lib
+luceneProj/src/test/java/cn/loix/test/TestIndex.java
+
+#### Web Project
+luceneProj is the core part，containing searching function and creating the web project.
+
+#### Others
+urls.xml contains all url paths.
+sql.sql is the create database file exported from sqlyog.
